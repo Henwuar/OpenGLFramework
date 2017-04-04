@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.0)
+project(Framework)
+
+#grab all the files
+file(GLOB_RECURSE sources "source/*.cpp" "source/*.h")
+file(GLOB_RECURSE data res/*)
+
+# add the data to the target, so it becomes visible in some IDE
+add_executable(Framework ${sources} ${data})
+
+#set up include directories
+include_directories(source/)
+
+#find external libraries
+include_directories(extern/glm/glm/)
+
+add_subdirectory(extern/glfw-3.2.1/)
+include_directories(extern/glfw-3.2.1/include)
+
+include_directories(extern/glad/include)
+#find_package(glew)
+
+
+# this copies all resource files in the build directory
+# we need this, because we want to work with paths relative to the executable
+file(COPY ${data} DESTINATION resources)
